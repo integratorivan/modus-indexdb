@@ -24,18 +24,18 @@ export const initFilesAction = action(() =>
 export const indexWorkspaceAction = action(async (workspacePath: string) => {
   try {
     console.log(`Starting workspace indexation: ${workspacePath}`)
-    
+
     // Очищаем существующие файлы
     await window.modus.files.clear()
-    
+
     // Запускаем индексацию через main процесс
     const result = await window.modus.indexWorkspace(workspacePath)
-    
+
     if (!result.success) {
       console.error('Workspace indexation failed:', result.error)
       throw new Error(result.error || 'Indexation failed')
     }
-    
+
     // Сохраняем найденные файлы в IndexedDB
     console.log(`Saving ${result.count} files to IndexedDB...`)
     for (const item of result.items) {
@@ -48,7 +48,7 @@ export const indexWorkspaceAction = action(async (workspacePath: string) => {
         content: item.content
       })
     }
-    
+
     console.log(`Workspace indexation completed! ${result.count} files indexed.`)
     return { success: true, count: result.count }
   } catch (error) {

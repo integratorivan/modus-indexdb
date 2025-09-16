@@ -46,7 +46,7 @@ const App = reatomComponent((): ReactNode => {
           {currentWorkspace ? `Workspace: ${currentWorkspace}` : 'Workspace not selected'}
         </p>
         <p style={{ fontSize: 12, marginTop: 8 }}>Files indexed: {fileList.length}</p>
-        
+
         {/* Кнопка для ручной переиндексации */}
         <button
           onClick={handleReindex}
@@ -63,7 +63,7 @@ const App = reatomComponent((): ReactNode => {
         >
           Reindex Workspace
         </button>
-        
+
         {/* Пример отображения списка файлов */}
         <div style={{ marginTop: 16, maxHeight: '200px', overflow: 'auto' }}>
           {fileList.map((file) => (

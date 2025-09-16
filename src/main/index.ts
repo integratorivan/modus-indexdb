@@ -73,7 +73,7 @@ async function indexWorkspace(workspacePath: string): Promise<FileSystemItem[]> 
   try {
     const items = await scanFileSystem(workspacePath)
     const endTime = Date.now()
-    
+
     console.log(`Indexation completed in ${endTime - startTime}ms. Found ${items.length} items.`)
     return items
   } catch (error) {
@@ -130,7 +130,7 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
-  
+
   // Обработчик выбора workspace
   ipcMain.handle('workspace:select', async () => {
     const result = await dialog.showOpenDialog({
