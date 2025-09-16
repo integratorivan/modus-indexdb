@@ -5,7 +5,22 @@ import { filesRepo, workspaceRepo, subscriptions } from './db'
 // Custom APIs for renderer
 const api = {
   selectWorkspaceDirectory: (): Promise<{ canceled: boolean; path?: string }> =>
-    ipcRenderer.invoke('workspace:select')
+    ipcRenderer.invoke('workspace:select'),
+  indexWorkspace: (
+    workspacePath: string
+  ): Promise<{
+    success: boolean
+    items: Array<{
+      id: string
+      name: string
+      type: 'file' | 'folder'
+      parentId?: string
+      updatedAt: number
+      content: string
+    }>
+    count: number
+    error?: string
+  }> => ipcRenderer.invoke('workspace:index', workspacePath)
 }
 
 const modusAPI = {
@@ -13,6 +28,7 @@ const modusAPI = {
   workspace: workspaceRepo,
   subscriptions,
   selectWorkspaceDirectory: api.selectWorkspaceDirectory,
+  indexWorkspace: api.indexWorkspace,
   // любые события из main (например, от chokidar)
   onFsEvent: (cb: (p: unknown) => void) => {
     ipcRenderer.on('fs:event', (_e, p) => cb(p))

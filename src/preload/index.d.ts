@@ -40,6 +40,19 @@ declare global {
         workspaceActive(cb: (row: WorkspaceRecord | undefined) => void): () => void
       }
       selectWorkspaceDirectory(): Promise<{ canceled: boolean; path?: string }>
+      indexWorkspace(workspacePath: string): Promise<{
+        success: boolean
+        items: Array<{
+          id: string
+          name: string
+          type: 'file' | 'folder'
+          parentId?: string
+          updatedAt: number
+          content: string
+        }>
+        count: number
+        error?: string
+      }>
       onFsEvent(cb: (p: unknown) => void): void
     }
   }
