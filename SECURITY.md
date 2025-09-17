@@ -65,11 +65,11 @@ SecureIPCManager.handle(IPC_CHANNELS.WORKSPACE_SELECT, async () => {
 - ✅ **Мониторинг нарушений**: CSP нарушения логируются в main процессе
 
 ```html
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'none'; 
-               script-src 'self'; 
-               style-src 'self'; 
-               img-src 'self' data: blob:; 
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'none';
+               script-src 'self';
+               style-src 'self';
+               img-src 'self' data: blob:;
                connect-src 'self';" />
 ```
 
