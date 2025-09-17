@@ -2,9 +2,13 @@ import { dialog, ipcMain, IpcMainInvokeEvent } from 'electron'
 import { indexWorkspace } from './filesystem'
 import type { IpcRequestMap, WorkspaceIndexResponse } from '@src/types/ipc'
 
+type RequestArg<K extends keyof IpcRequestMap> = IpcRequestMap[K]['req'] extends void
+  ? undefined
+  : IpcRequestMap[K]['req']
+
 type IpcInvokeHandler<K extends keyof IpcRequestMap> = (
   event: IpcMainInvokeEvent,
-  request: IpcRequestMap[K]['req']
+  request: RequestArg<K>
 ) => Promise<IpcRequestMap[K]['res']> | IpcRequestMap[K]['res']
 
 /**

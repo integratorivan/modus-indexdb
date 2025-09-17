@@ -13,9 +13,14 @@ export type WorkspaceIndexResponse = {
   error?: string
 }
 
+type IpcChannel<Request = void, Response = void> = {
+  req: Request
+  res: Response
+}
+
 export type IpcRequestMap = {
-  'workspace:select': { req: undefined; res: WorkspaceSelectResponse }
-  'workspace:index': { req: string; res: WorkspaceIndexResponse }
+  'workspace:select': IpcChannel<void, WorkspaceSelectResponse>
+  'workspace:index': IpcChannel<string, WorkspaceIndexResponse>
 }
 
 export type IpcEventMap = {
