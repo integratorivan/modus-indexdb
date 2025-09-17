@@ -12,7 +12,7 @@ export const FileTree = reatomComponent((): ReactNode => {
   return (
     <div style={{ width: 100 }}>
       {fileList.map((fileAtom) => (
-        <FileNode fileAtom={fileAtom} />
+        <FileNode key={fileAtom.id} {...fileAtom} />
       ))}
     </div>
   )
