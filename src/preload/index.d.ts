@@ -1,14 +1,6 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
 import { FileSystemItem } from '@src/types/domain/file'
-
-type FileRecord = {
-  id: string
-  name: string
-  type: string
-  updatedAt: number
-  parentId?: string
-  content: string
-}
+import type { WorkspaceIndexResponse, WorkspaceSelectResponse } from '@src/types/ipc'
 
 type WorkspaceRecord = {
   key: string
@@ -20,13 +12,13 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      selectWorkspaceDirectory(): Promise<{ canceled: boolean; path?: string }>
+      selectWorkspaceDirectory(): Promise<WorkspaceSelectResponse>
     }
     modus: {
       files: {
-        getAll(): Promise<FileRecord[]>
-        getById(id: string): Promise<FileRecord | undefined>
-        save(f: FileRecord): Promise<string>
+        getAll(): Promise<FileSystemItem[]>
+        getById(id: string): Promise<FileSystemItem | undefined>
+        save(f: FileSystemItem): Promise<string>
         remove(id: string): Promise<void>
         clear(): Promise<void>
       }
@@ -36,17 +28,15 @@ declare global {
         clear(): Promise<void>
       }
       subscriptions: {
-        filesAll(cb: (rows: FileRecord[]) => void): () => void
-        filesByParent(parentId: string | undefined, cb: (rows: FileRecord[]) => void): () => void
+        filesAll(cb: (rows: FileSystemItem[]) => void): () => void
+        filesByParent(
+          parentId: string | undefined,
+          cb: (rows: FileSystemItem[]) => void
+        ): () => void
         workspaceActive(cb: (row: WorkspaceRecord | undefined) => void): () => void
       }
-      selectWorkspaceDirectory(): Promise<{ canceled: boolean; path?: string }>
-      indexWorkspace(workspacePath: string): Promise<{
-        success: boolean
-        items: Array<FileSystemItem>
-        count: number
-        error?: string
-      }>
+      selectWorkspaceDirectory(): Promise<WorkspaceSelectResponse>
+      indexWorkspace(workspacePath: string): Promise<WorkspaceIndexResponse>
       onFsEvent(cb: (p: unknown) => void): void
     }
   }

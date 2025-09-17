@@ -1,19 +1,23 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { filesRepo, workspaceRepo, subscriptions } from './db'
-import { FileSystemItem } from '@src/types/domain/file'
+import type {
+  IpcRequestMap,
+  WorkspaceIndexResponse,
+  WorkspaceSelectResponse
+} from '@src/types/ipc'
+
+const invoke = <K extends keyof IpcRequestMap>(
+  channel: K,
+  request: IpcRequestMap[K]['req']
+): Promise<IpcRequestMap[K]['res']> =>
+  ipcRenderer.invoke(channel, request) as Promise<IpcRequestMap[K]['res']>
 
 const api = {
-  selectWorkspaceDirectory: (): Promise<{ canceled: boolean; path?: string }> =>
-    ipcRenderer.invoke('workspace:select'),
-  indexWorkspace: (
-    workspacePath: string
-  ): Promise<{
-    success: boolean
-    items: Array<FileSystemItem>
-    count: number
-    error?: string
-  }> => ipcRenderer.invoke('workspace:index', workspacePath)
+  selectWorkspaceDirectory: (): Promise<WorkspaceSelectResponse> =>
+    invoke('workspace:select', undefined),
+  indexWorkspace: (workspacePath: string): Promise<WorkspaceIndexResponse> =>
+    invoke('workspace:index', workspacePath)
 }
 
 const modusAPI = {

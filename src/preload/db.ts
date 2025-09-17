@@ -1,13 +1,5 @@
+import type { FileSystemItem } from '@src/types/domain/file'
 import Dexie, { Table, liveQuery } from 'dexie'
-
-type FileRecord = {
-  id: string
-  name: string
-  type: string
-  updatedAt: number
-  parentId?: string
-  content: string
-}
 
 type WorkspaceRecord = {
   key: string
@@ -16,7 +8,7 @@ type WorkspaceRecord = {
 }
 
 class AppDB extends Dexie {
-  files!: Table<FileRecord, string>
+  files!: Table<FileSystemItem, string>
   workspace!: Table<WorkspaceRecord, string>
   constructor() {
     super('modus')
@@ -36,7 +28,7 @@ const WORKSPACE_KEY = 'active'
 export const filesRepo = {
   getAll: () => db.files.toArray(),
   getById: (id: string) => db.files.get(id),
-  save: (f: FileRecord) => db.files.put(f),
+  save: (f: FileSystemItem) => db.files.put(f),
   remove: (id: string) => db.files.delete(id),
   clear: () => db.files.clear(),
   // Функция для получения только названий файлов (без контента)
@@ -73,7 +65,7 @@ export const subscriptions = {
    * Подписка на все файлы, отсортированные по updatedAt (по убыванию).
    * Вернёт функцию, которую нужно вызвать в cleanup, чтобы отписаться.
    */
-  filesAll(cb: (rows: FileRecord[]) => void) {
+  filesAll(cb: (rows: FileSystemItem[]) => void) {
     const sub = liveQuery(() => db.files.orderBy('updatedAt').reverse().toArray()).subscribe({
       next: cb,
       error: console.error
@@ -85,7 +77,7 @@ export const subscriptions = {
    * Подписка на файлы по parentId. Если parentId не передан, следим за всеми файлами.
    * Вернёт функцию, которую нужно вызвать в cleanup, чтобы отписаться.
    */
-  filesByParent(parentId: string | undefined, cb: (rows: FileRecord[]) => void) {
+  filesByParent(parentId: string | undefined, cb: (rows: FileSystemItem[]) => void) {
     const sub = liveQuery(() =>
       parentId ? db.files.where({ parentId }).toArray() : db.files.filter(() => true).toArray()
     ).subscribe({ next: cb, error: console.error })
