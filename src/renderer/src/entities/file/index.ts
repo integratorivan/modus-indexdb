@@ -5,7 +5,6 @@ import { currentWorkspaceAtom } from '../workspace'
 // Атом для хранения списка файлов
 export const fileListAtom = atom<BaseFile[]>([], 'fileListAtom')
 
-// Действие для инициализации подписки на файлы
 export const initFilesAction = action(() =>
   window.modus.subscriptions.filesAll((files) => {
     // Устанавливаем файлы в атом без контента (только индексация)
