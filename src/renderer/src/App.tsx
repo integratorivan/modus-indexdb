@@ -8,10 +8,6 @@ const App = reatomComponent((): ReactNode => {
   const currentWorkspace = currentWorkspaceAtom()
   const fileList = fileListAtom()
 
-  if (!currentWorkspace) {
-    return <p>Workspace not selected</p>
-  }
-
   return (
     <div style={{ display: 'flex', gap: '20px' }}>
       <div style={{ minWidth: '200px' }}>

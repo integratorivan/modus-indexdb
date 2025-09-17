@@ -25,9 +25,11 @@
     "@electron-toolkit/utils": "^4.0.0",
     "@reatom/core": "^1000.0.0-alpha.34",
     "@reatom/react": "^1000.0.0-alpha.32",
+    "chokidar": "^4.0.3",
     "dexie": "^4.2.0",
     "dexie-react-hooks": "^4.2.0",
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.3.9",
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
