@@ -3,16 +3,7 @@ import { join } from 'path'
 import { promises as fs } from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-
-// Интерфейс для файла/папки
-interface FileSystemItem {
-  id: string
-  name: string
-  type: 'file' | 'folder'
-  parentId?: string
-  updatedAt: number
-  content: string
-}
+import { FileSystemItem } from '@src/types/domain/file'
 
 // Функция для рекурсивного сканирования файловой системы
 async function scanFileSystem(

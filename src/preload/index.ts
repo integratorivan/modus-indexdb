@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { filesRepo, workspaceRepo, subscriptions } from './db'
+import { FileSystemItem } from '@src/types/domain/file'
 
 const api = {
   selectWorkspaceDirectory: (): Promise<{ canceled: boolean; path?: string }> =>
@@ -9,14 +10,7 @@ const api = {
     workspacePath: string
   ): Promise<{
     success: boolean
-    items: Array<{
-      id: string
-      name: string
-      type: 'file' | 'folder'
-      parentId?: string
-      updatedAt: number
-      content: string
-    }>
+    items: Array<FileSystemItem>
     count: number
     error?: string
   }> => ipcRenderer.invoke('workspace:index', workspacePath)

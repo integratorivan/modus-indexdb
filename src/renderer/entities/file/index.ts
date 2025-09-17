@@ -1,9 +1,9 @@
 import { action, atom } from '@reatom/core'
-import { BaseFile } from './types'
 import { currentWorkspaceAtom } from '../workspace'
+import { FileSystemItem } from '@src/types/domain/file'
 
 // Атом для хранения списка файлов
-export const fileListAtom = atom<BaseFile[]>([], 'fileListAtom')
+export const fileListAtom = atom<FileSystemItem[]>([], 'fileListAtom')
 
 export const initFilesAction = action(() =>
   window.modus.subscriptions.filesAll((files) => {

@@ -1,6 +1,6 @@
 import { reatomComponent } from '@reatom/react'
-import { fileListAtom } from '@renderer/entities/file'
 import { ReactNode } from 'react'
+import { fileListAtom } from '../entities/file'
 import { FileNode } from './Node'
 
 export const FileTree = reatomComponent((): ReactNode => {

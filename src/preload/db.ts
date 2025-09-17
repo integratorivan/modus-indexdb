@@ -32,6 +32,7 @@ export const db = new AppDB()
 const WORKSPACE_KEY = 'active'
 
 // Минимальный репозиторий
+// TODO: Вот это хочется попилить и разнести по preload по бизнес логики и сделать какой-то фасад для использования этой истории
 export const filesRepo = {
   getAll: () => db.files.toArray(),
   getById: (id: string) => db.files.get(id),
@@ -66,6 +67,7 @@ export const workspaceRepo = {
   clear: () => db.workspace.delete(WORKSPACE_KEY)
 }
 
+// TODO: Используем подписки liveQuery из dexie для реактивности и для использования в reatom
 export const subscriptions = {
   /**
    * Подписка на все файлы, отсортированные по updatedAt (по убыванию).

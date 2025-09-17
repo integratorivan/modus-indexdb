@@ -1,4 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
+import { FileSystemItem } from '@src/types/domain/file'
 
 type FileRecord = {
   id: string
@@ -42,14 +43,7 @@ declare global {
       selectWorkspaceDirectory(): Promise<{ canceled: boolean; path?: string }>
       indexWorkspace(workspacePath: string): Promise<{
         success: boolean
-        items: Array<{
-          id: string
-          name: string
-          type: 'file' | 'folder'
-          parentId?: string
-          updatedAt: number
-          content: string
-        }>
+        items: Array<FileSystemItem>
         count: number
         error?: string
       }>
