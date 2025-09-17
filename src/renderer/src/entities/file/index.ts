@@ -1,5 +1,6 @@
 import { action, atom } from '@reatom/core'
 import { BaseFile } from './types'
+import { currentWorkspaceAtom } from '../workspace'
 
 // Атом для хранения списка файлов
 export const fileListAtom = atom<BaseFile[]>([], 'fileListAtom')
@@ -56,3 +57,23 @@ export const indexWorkspaceAction = action(async (workspacePath: string) => {
     throw error
   }
 }, 'indexWorkspaceAction')
+
+export const initFileSystemWatcherAction = action(() => {
+  console.log('Initializing file system watcher...')
+
+  // Подписываемся на изменения currentWorkspaceAtom
+  currentWorkspaceAtom.subscribe((workspacePath) => {
+    if (workspacePath) {
+      console.log('Workspace changed, starting file system indexation:', workspacePath)
+
+      // Запускаем индексацию для нового workspace
+      indexWorkspaceAction(workspacePath).catch((error) => {
+        console.error('Failed to index workspace:', error)
+      })
+    } else {
+      console.log('Workspace cleared, clearing file list')
+      // Очищаем список файлов если workspace не выбран
+      fileListAtom.set([])
+    }
+  })
+}, 'initFileSystemWatcherAction')

@@ -2,7 +2,6 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { filesRepo, workspaceRepo, subscriptions } from './db'
 
-// Custom APIs for renderer
 const api = {
   selectWorkspaceDirectory: (): Promise<{ canceled: boolean; path?: string }> =>
     ipcRenderer.invoke('workspace:select'),
