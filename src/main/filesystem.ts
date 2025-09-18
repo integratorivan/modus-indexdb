@@ -63,7 +63,6 @@ export const scanFileSystem = async (
  * Индексирует выбранный workspace, измеряя время выполнения и возвращая найденные элементы.
  */
 export const indexWorkspace = async (workspacePath: string): Promise<FileSystemItem[]> => {
-  console.log(`Starting indexation of workspace: ${workspacePath}`)
   const startTime = Date.now()
 
   try {

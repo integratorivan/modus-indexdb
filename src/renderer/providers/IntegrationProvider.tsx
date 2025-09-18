@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react'
-import { initWorkspaceAction } from '../entities/workspace'
-import { initFilesAction, initFileSystemWatcherAction } from '../entities/file'
+import { initWorkspaceAction } from '$entities/workspace'
+import { initFilesAction, initFileSystemWatcherAction } from '$entities/file'
 import { reatomComponent } from '@reatom/react'
 
 interface IntegrationProviderProps {

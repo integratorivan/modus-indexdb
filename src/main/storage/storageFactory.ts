@@ -2,9 +2,7 @@ import { FsStorage } from './adapters/fsStorage'
 import { HttpApiStorage } from './adapters/httpApiStorage'
 import type { StoragePort } from '$core/storage/storagePort'
 
-export type StorageConfig =
-  | { type: 'fs' }
-  | { type: 'http'; baseUrl: string }
+export type StorageConfig = { type: 'fs' } | { type: 'http'; baseUrl: string }
 
 /**
  * Создаёт конкретное хранилище на основе конфигурации.

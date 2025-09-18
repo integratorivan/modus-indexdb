@@ -1,4 +1,3 @@
-import type { StoragePort } from '$core/storage/storagePort'
 import { createStorage, type StorageConfig } from './storageFactory'
 
 const envMode = (process.env.STORAGE_MODE ?? 'fs') as 'fs' | 'http'
