@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { initWorkspaceAction } from '../entities/workspace'
 import { initFilesAction, initFileSystemWatcherAction } from '../entities/file'
 import { reatomComponent } from '@reatom/react'
@@ -18,17 +18,19 @@ interface IntegrationProviderProps {
 export const IntegrationProvider = reatomComponent(
   ({ children }: IntegrationProviderProps): ReactNode => {
     console.log('- Initializing workspace system')
-    initWorkspaceAction()
+    useEffect(() => {
+      initWorkspaceAction()
 
-    // 2. Инициализируем file system watcher (реагирует на изменения workspace)
-    console.log('- Setting up file system watcher')
-    initFileSystemWatcherAction()
+      // 2. Инициализируем file system watcher (реагирует на изменения workspace)
+      console.log('- Setting up file system watcher')
+      initFileSystemWatcherAction()
 
-    // 3. Инициализируем подписку на файлы из IndexedDB
-    console.log('- Setting up IndexedDB file subscription')
-    initFilesAction()
+      // 3. Инициализируем подписку на файлы из IndexedDB
+      console.log('- Setting up IndexedDB file subscription')
+      initFilesAction()
 
-    console.log('render')
+      console.log('render')
+    }, [])
 
     return <>{children}</>
   },

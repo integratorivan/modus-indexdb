@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import type { IpcEventMap } from '@src/types/ipc'
+import type { IpcEventMap } from '$types/ipc'
 
 export type FsEventHandler = (payload: IpcEventMap['fs:event']) => void
 

@@ -4,5 +4,6 @@ export interface FileSystemItem {
   type: 'file' | 'folder'
   parentId?: string
   updatedAt: number
+  path: string
   content: string
 }

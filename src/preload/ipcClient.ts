@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import type { IpcRequestMap } from '@src/types/ipc'
+import type { IpcRequestMap } from '$types/ipc'
 
 /**
  * Вычисляет форму аргументов `ipcRenderer.invoke` в зависимости от наличия запроса.

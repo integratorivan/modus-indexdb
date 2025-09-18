@@ -1,4 +1,4 @@
-import type { FileSystemItem } from '@src/types/domain/file'
+import type { FileSystemItem } from '$types/domain/file'
 import Dexie, { Table, liveQuery } from 'dexie'
 
 type WorkspaceRecord = {
@@ -29,6 +29,7 @@ export const filesRepo = {
   getAll: () => db.files.toArray(),
   getById: (id: string) => db.files.get(id),
   save: (f: FileSystemItem) => db.files.put(f),
+  saveMany: (files: FileSystemItem[]) => db.files.bulkPut(files),
   remove: (id: string) => db.files.delete(id),
   clear: () => db.files.clear(),
   // Функция для получения только названий файлов (без контента)
@@ -41,6 +42,7 @@ export const filesRepo = {
       type: file.type,
       updatedAt: file.updatedAt,
       parentId: file.parentId,
+      path: file.path,
       content: '' // Контент не нужен на этапе индексации
     }))
   }

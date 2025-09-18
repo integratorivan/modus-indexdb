@@ -1,6 +1,13 @@
 import { dialog, ipcMain, IpcMainInvokeEvent } from 'electron'
 import { indexWorkspace } from './filesystem'
-import type { IpcRequestMap, WorkspaceIndexResponse } from '@src/types/ipc'
+import { storage } from '$main/storage'
+import type {
+  IpcRequestMap,
+  StorageListResponse,
+  StorageReadTextResponse,
+  StorageRenameResponse,
+  WorkspaceIndexResponse
+} from '$types/ipc'
 
 type RequestArg<K extends keyof IpcRequestMap> = IpcRequestMap[K]['req'] extends void
   ? undefined
@@ -68,10 +75,42 @@ const handleWorkspaceIndex: IpcInvokeHandler<'workspace:index'> = async (
   }
 }
 
+const handleStorageReadText: IpcInvokeHandler<'storage:readText'> = async (
+  _event,
+  { path }
+): Promise<StorageReadTextResponse> => {
+  const content = await storage.readText(path)
+  return { content }
+}
+
+const handleStorageList: IpcInvokeHandler<'storage:list'> = async (
+  _event,
+  { path }
+): Promise<StorageListResponse> => {
+  const entries = await storage.list(path)
+  return { entries }
+}
+
+const handleStorageRename: IpcInvokeHandler<'storage:rename'> = async (
+  _event,
+  { path, newName }
+): Promise<StorageRenameResponse> => {
+  const newPath = await storage.rename(path, newName)
+  return { newPath }
+}
+
+const handleStorageStat: IpcInvokeHandler<'storage:stat'> = async (_event, { path }) => {
+  return storage.stat(path)
+}
+
 /**
  * Инициализирует все IPC-каналы main-процесса.
  */
 export const registerIpcHandlers = (): void => {
   registerInvokeHandler('workspace:select', handleWorkspaceSelect)
   registerInvokeHandler('workspace:index', handleWorkspaceIndex)
+  registerInvokeHandler('storage:readText', handleStorageReadText)
+  registerInvokeHandler('storage:list', handleStorageList)
+  registerInvokeHandler('storage:rename', handleStorageRename)
+  registerInvokeHandler('storage:stat', handleStorageStat)
 }

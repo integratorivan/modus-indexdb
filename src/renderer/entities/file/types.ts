@@ -4,5 +4,6 @@ export type BaseFile = {
   type: 'file' | 'folder'
   updatedAt: number
   parentId?: string
+  path: string
   content: string
 }

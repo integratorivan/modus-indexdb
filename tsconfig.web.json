@@ -11,15 +11,19 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@renderer/*": [
-        "src/renderer/*"
-      ],
-      "@src/*": [
-        "src/*"
-      ],
-      "@types/*": [
-        "src/types/*"
-      ]
+      "@renderer/*": ["src/renderer/*"],
+      "@src/*": ["src/*"],
+      "@types/*": ["src/types/*"],
+      "$types/*": ["src/types/*"],
+      "$core/*": ["src/core/*"],
+      "$entities/*": ["src/renderer/entities/*"],
+      "$features/*": ["src/renderer/features/*"],
+      "$components/*": ["src/renderer/components/*"],
+      "$providers/*": ["src/renderer/providers/*"],
+      "$renderer/*": ["src/renderer/*"],
+      "$preload/*": ["src/preload/*"],
+      "$main/*": ["src/main/*"],
+      "$web/*": ["src/web/*"]
     }
   }
 }

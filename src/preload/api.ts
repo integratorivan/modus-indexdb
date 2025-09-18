@@ -1,15 +1,13 @@
-import type { WorkspaceIndexResponse, WorkspaceSelectResponse } from '@src/types/ipc'
+import type { WorkspaceSelectResponse } from '$types/ipc'
 import { invokeIpc } from './ipcClient'
 
-export interface RendererApi {
+export interface RendererSystemApi {
   selectWorkspaceDirectory(): Promise<WorkspaceSelectResponse>
-  indexWorkspace(workspacePath: string): Promise<WorkspaceIndexResponse>
 }
 
 /**
  * Создаёт клиентские методы, работающие через типизированный IPC.
  */
-export const createRendererApi = (): RendererApi => ({
-  selectWorkspaceDirectory: () => invokeIpc('workspace:select'),
-  indexWorkspace: (workspacePath: string) => invokeIpc('workspace:index', workspacePath)
+export const createRendererSystemApi = (): RendererSystemApi => ({
+  selectWorkspaceDirectory: () => invokeIpc('workspace:select')
 })

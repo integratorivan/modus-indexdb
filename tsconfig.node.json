@@ -6,7 +6,18 @@
     "types": ["electron-vite/node"],
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@types/*": ["src/types/*"],
+      "$types/*": ["src/types/*"],
+      "$core/*": ["src/core/*"],
+      "$main/*": ["src/main/*"],
+      "$preload/*": ["src/preload/*"],
+      "$entities/*": ["src/renderer/entities/*"],
+      "$features/*": ["src/renderer/features/*"],
+      "$components/*": ["src/renderer/components/*"],
+      "$providers/*": ["src/renderer/providers/*"],
+      "$renderer/*": ["src/renderer/*"],
+      "$web/*": ["src/web/*"]
     }
   }
 }
